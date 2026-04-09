@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useEffect, useRef } from "react";
 
-// Mengubah data mentah menjadi format array agar mudah di-render
+// Data chat dipertahankan sesuai aslinya
 const chatHistory = [
   { time: "28/3 00.18", sender: "lili", text: "oiya besk amin brng sadam inter" },
   { time: "28/3 00.29", sender: "lili", text: "hop" },
@@ -104,125 +103,112 @@ const chatHistory = [
 export default function OurStoryPage() {
   const endOfChatRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll ke bawah saat halaman dimuat (opsional)
   useEffect(() => {
-    endOfChatRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Memberikan jeda sedikit agar halaman selesai dirender sebelum scroll
+    setTimeout(() => {
+      endOfChatRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 500);
   }, []);
 
   return (
-    <div style={{ 
-      width: "100vw", 
-      height: "100vh", 
-      backgroundColor: "#050508", 
-      color: "white", 
-      position: "relative", 
-      overflow: "hidden",
-      fontFamily: "'Inter', sans-serif"
-    }}>
-      {/* Background Effect */}
-      <div style={{
-        position: "absolute", top: "-50%", left: "-50%", width: "200%", height: "200%",
-        background: "radial-gradient(circle at 50% 50%, rgba(255, 179, 198, 0.05) 0%, transparent 60%)",
-        pointerEvents: "none"
-      }} />
+    <div className="min-h-screen bg-[#fdfbf7] relative overflow-hidden pt-28 pb-20 px-6 sm:px-12 md:px-20 lg:px-40">
+      
+      {/* Latar Belakang Hangat */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-100/40 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-50/50 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
+      </div>
 
-      {/* Header */}
-      <header style={{
-        position: "absolute", top: 0, left: 0, width: "100%", height: "80px",
-        background: "rgba(10, 10, 15, 0.8)", backdropFilter: "blur(10px)",
-        borderBottom: "1px solid rgba(255, 179, 198, 0.1)", zIndex: 10,
-        display: "flex", alignItems: "center", padding: "0 2rem", justifyContent: "space-between"
-      }}>
-        <Link href="/" style={{ 
-          color: "#ffb3c6", textDecoration: "none", fontSize: "1rem", 
-          display: "flex", alignItems: "center", gap: "10px", fontWeight: "bold" 
-        }}>
-          &larr; Kembali ke Angsa Putih
-        </Link>
-        <div style={{ textAlign: "right" }}>
-          <h1 style={{ margin: 0, fontSize: "1.2rem", color: "#fff" }}>The Chaos Before The Calm</h1>
-          <p style={{ margin: 0, fontSize: "0.8rem", color: "#888" }}>Lili & Kodel - 2026</p>
-        </div>
-      </header>
-
-      {/* Chat Container */}
-      <div style={{
-        position: "absolute", top: "80px", left: "50%", transform: "translateX(-50%)",
-        width: "100%", maxWidth: "800px", height: "calc(100vh - 80px)",
-        overflowY: "auto", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem"
-      }}>
+      <div className="relative z-10 max-w-3xl mx-auto">
         
-        {/* Pesan Pembuka */}
-        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-          <span style={{ 
-            background: "rgba(255, 179, 198, 0.1)", color: "#ffb3c6", 
-            padding: "5px 15px", borderRadius: "20px", fontSize: "0.8rem", letterSpacing: "1px" 
-          }}>
-            RIWAYAT PERJALANAN KITA
-          </span>
+        {/* Header Kisah */}
+        <div className="text-center mb-16">
+          <motion.p 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-rose-400 font-bold tracking-widest text-xs uppercase mb-3"
+          >
+            Riwayat Perjalanan
+          </motion.p>
+          <motion.h1 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-serif text-rose-900 mb-4"
+          >
+            The Chaos Before The Calm
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-zinc-500 font-serif italic text-lg"
+          >
+            Bagaimana kesalahpahaman dan kekacauan kecil membawa kita pada satu titik temu.
+          </motion.p>
         </div>
 
-        {/* Looping Chat History */}
-        {chatHistory.map((chat, index) => {
-          const isLili = chat.sender === "lili";
-          
-          return (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5 }}
-              style={{
-                alignSelf: isLili ? "flex-start" : "flex-end",
-                maxWidth: "75%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: isLili ? "flex-start" : "flex-end"
-              }}
-            >
-              <span style={{ fontSize: "0.75rem", color: "#666", marginBottom: "5px", marginLeft: "5px", marginRight: "5px" }}>
-                {isLili ? "Lili" : "Kodel"} • {chat.time}
-              </span>
-              <div style={{
-                background: isLili 
-                  ? "linear-gradient(135deg, rgba(255, 179, 198, 0.15), rgba(255, 179, 198, 0.05))" 
-                  : "linear-gradient(135deg, rgba(74, 78, 105, 0.4), rgba(34, 34, 59, 0.4))",
-                border: isLili ? "1px solid rgba(255, 179, 198, 0.3)" : "1px solid rgba(154, 140, 152, 0.2)",
-                padding: "1rem 1.2rem",
-                borderRadius: isLili ? "2px 20px 20px 20px" : "20px 2px 20px 20px",
-                color: "#e0e0e0",
-                fontSize: "0.95rem",
-                lineHeight: "1.6",
-                whiteSpace: "pre-wrap", // Mempertahankan enter/baris baru dari teks asli
-                boxShadow: "0 4px 15px rgba(0,0,0,0.2)"
-              }}>
-                {chat.text}
-              </div>
-            </motion.div>
-          );
-        })}
+        {/* Linimasa Cerita (Bukan Bubble Chat) */}
+        <div className="relative border-l border-rose-200/60 ml-3 md:ml-6 space-y-10 pb-10">
+          {chatHistory.map((chat, index) => {
+            const isLili = chat.sender === "lili";
+            
+            return (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="relative pl-8 md:pl-10"
+              >
+                {/* Dot Indikator Linimasa */}
+                <div className={`absolute w-2.5 h-2.5 rounded-full left-[-5.5px] top-1.5 shadow-sm ${
+                  isLili ? 'bg-rose-400 ring-4 ring-rose-50' : 'bg-zinc-400 ring-4 ring-zinc-50'
+                }`} />
 
-        {/* Pesan Penutup / Kesimpulan */}
+                {/* Nama & Waktu */}
+                <div className="flex items-baseline gap-3 mb-1.5">
+                  <span className={`font-serif text-lg ${isLili ? 'text-rose-700 font-medium' : 'text-zinc-800 font-semibold'}`}>
+                    {isLili ? 'Lili' : 'Kodel'}
+                  </span>
+                  <span className="text-zinc-400 text-xs font-medium tracking-wide">
+                    {chat.time}
+                  </span>
+                </div>
+
+                {/* Teks Pesan */}
+                <p className="text-zinc-600 leading-relaxed whitespace-pre-wrap font-sans text-sm md:text-base">
+                  {chat.text}
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Kesimpulan Penutup */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          style={{
-            marginTop: "4rem", marginBottom: "4rem", padding: "2rem",
-            background: "rgba(255, 179, 198, 0.05)", border: "1px dashed rgba(255, 179, 198, 0.3)",
-            borderRadius: "20px", textAlign: "center"
-          }}
+          className="mt-20 p-8 md:p-12 bg-white/60 backdrop-blur-sm border border-rose-100 rounded-2xl shadow-sm text-center relative overflow-hidden"
         >
-          <p style={{ color: "#ffb3c6", fontStyle: "italic", fontSize: "1.1rem", marginBottom: "1rem" }}>
-            "noted yaaa next kamu terserah mau gimana kalau aku sampe gitu lagi... janjii kitaa 🤞"
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rose-300 to-transparent opacity-50" />
+          
+          <svg className="w-8 h-8 mx-auto text-rose-300 mb-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 4.02-6.59 8.125-10.09.418-.358.96-.358 1.375 0 4.105 3.5 8.125 6.59 8.125 10.09 0 1.989-.553 3.216-1.583 4.31-1.121 1.188-2.766 1.849-4.417 1.849-2.203 0-3.565-1.135-4.812-2.181-1.248 1.046-2.61 2.181-4.813 2.181-1.651 0-3.296-.661-4.417-1.849z"/>
+          </svg>
+
+          <p className="text-rose-800 font-serif italic text-xl md:text-2xl leading-relaxed mb-6">
+            "Noted yaaa, next kamu terserah mau gimana kalau aku sampe gitu lagi... janjii kitaa 🤞"
           </p>
-          <p style={{ color: "#888", fontSize: "0.9rem" }}>
-            Dari rentetan kesalahpahaman, overthinking, dan keras kepala, akhirnya kita belajar untuk saling mendengarkan dan mengerti. Terima kasih sudah mencatat janjinya, Lili.
+          <p className="text-zinc-500 text-sm md:text-base leading-relaxed max-w-xl mx-auto font-sans">
+            Dari rentetan kesalahpahaman, overthinking, dan keras kepala, akhirnya kita belajar untuk saling mendengarkan. Terima kasih sudah mencatat janjinya. Hari ini adalah awal dari kelanjutan cerita kita.
           </p>
         </motion.div>
 
-        <div ref={endOfChatRef} />
+        {/* Ref untuk auto-scroll */}
+        <div ref={endOfChatRef} className="h-20" />
       </div>
     </div>
   );
