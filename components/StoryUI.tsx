@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import Link from "next/link"; // Import Link dari Next.js
+import Link from "next/link";
 
 export default function StoryUI() {
   // --- LOGIKA LIVE TIME TRACKER ---
@@ -32,136 +32,144 @@ export default function StoryUI() {
     return () => clearInterval(interval);
   }, []);
 
-  // --- ANIMASI & STYLING ---
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 1.2, ease: "easeOut" } }
-  };
-
-  const textStyle = { color: "#e0e0e0", fontSize: "1.2rem", marginBottom: "2rem", lineHeight: "1.8", textShadow: "0px 2px 4px rgba(0,0,0,0.8)" };
-  const emphasisStyle = { color: "#ffb3c6", fontWeight: "bold", textShadow: "0px 0px 8px rgba(255, 179, 198, 0.5)" };
-
   return (
-    <div style={{
-      position: "absolute", top: 0, right: 0, width: "100%", maxWidth: "600px", height: "100%",
-      padding: "10vh 5%", overflowY: "auto", pointerEvents: "all", zIndex: 10,
-      fontFamily: "'Courier New', Courier, monospace",
-      background: "linear-gradient(to right, rgba(10,10,10,0), rgba(5,5,8,0.7) 20%, rgba(5,5,8,0.95) 100%)",
-    }}>
+    <div className="fixed top-0 right-0 w-full md:w-1/2 lg:w-2/5 h-full overflow-y-auto z-20 pointer-events-none">
+      {/* Background Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-black/60 pointer-events-none" />
       
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }} variants={fadeInUp}>
-        <h1 style={{ color: "#ffb3c6", fontSize: "3rem", marginBottom: "2rem", letterSpacing: "2px" }}>History Angsa Putih</h1>
-        <p style={textStyle}>
-          Dulu, hiburan satu-satunya Lili hanyalah buku. Suatu hari, ia membaca cerita tentang <span style={emphasisStyle}>&quot;Mr. Bebek Kwek Kwek&quot;</span> yang cerewet.
-        </p>
-        <p style={textStyle}>
-          Lili merasa tersindir, &quot;wkwk... karena aku cerewet, kayak Mr Kwek Kwek,&quot; pikirnya.
-        </p>
-      </motion.div>
-
-      <div style={{ height: "40vh" }}></div>
-
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }} variants={fadeInUp}>
-        <p style={textStyle}>
-          Saat harus membuat akun ML, Lili teringat dongeng lain tentang seekor angsa yang cantik, namun terlihat kotor karena debu.
-        </p>
-        <p style={textStyle}>
-          &quot;<span style={emphasisStyle}>Itu bentuk insecurity aku dulu...</span>&quot;
-        </p>
-        <p style={textStyle}>
-          Dari situlah lahir username pertama: <span style={emphasisStyle}>&quot;angsaburukrupa&quot;</span>.
-        </p>
-      </motion.div>
-
-      <div style={{ height: "40vh" }}></div>
-
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }} variants={fadeInUp}>
-        <p style={textStyle}>
-          Namun waktu berlalu. <span style={emphasisStyle}>Insecurity itu perlahan sembuh</span>. Lili belajar untuk percaya diri dan bersyukur.
-        </p>
-        <p style={textStyle}>
-          Angsa yang buruk rupa itu pun bertransformasi...
-        </p>
-        <h2 style={{ ...emphasisStyle, fontSize: "2.5rem", marginTop: "2rem", marginBottom: "1rem" }}>
-          ...menjadi seekor Angsa Putih.
-        </h2>
-        <p style={{...textStyle, fontSize: "1rem", color: "#aaaaaa"}}>
-          Kini ia dikenal sebagai <span style={{color: "white", fontWeight: "bold"}}>angsaputiihh</span>.
-        </p>
-      </motion.div>
-
-      <div style={{ height: "30vh" }}></div>
-
-      {/* --- KOTAK MEMORI & LIVE TRACKER --- */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.8 }} 
-        whileInView={{ opacity: 1, scale: 1, transition: { duration: 1, delay: 0.2 } }} 
-        viewport={{ once: false }}
-        style={{
-          padding: "2.5rem",
-          border: "1px solid rgba(255, 179, 198, 0.4)",
-          borderRadius: "16px",
-          background: "linear-gradient(135deg, rgba(255,179,198,0.1), rgba(0,0,0,0.5))",
-          backdropFilter: "blur(10px)",
-          textAlign: "center",
-          boxShadow: "0 0 20px rgba(255, 179, 198, 0.1)"
-        }}
-      >
-        <h3 style={{ color: "white", fontSize: "1.8rem", marginBottom: "2rem", letterSpacing: "3px", fontFamily: "sans-serif" }}>
-          LILI &amp; US
-        </h3>
+      {/* Content Container */}
+      <div className="relative p-8 md:p-12 space-y-16 pointer-events-auto">
         
-        <div style={{ marginBottom: "1.5rem" }}>
-          <span style={{ display: "block", fontSize: "0.85rem", color: "#888", letterSpacing: "2px", marginBottom: "0.3rem" }}>HARI LAHIR</span>
-          <span style={{ fontSize: "1.3rem", color: "#ffb3c6", fontWeight: "bold" }}>🎂 21 Juni 2003</span>
-        </div>
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-20%" }}
+          transition={{ duration: 0.8 }}
+          className="space-y-6"
+        >
+          <h1 className="text-4xl md:text-5xl font-display text-primary-pink text-glow-strong mb-4 tracking-wide">
+            History Angsa Putih
+          </h1>
+          <div className="w-16 h-1 bg-gradient-to-r from-primary-pink to-primary-pink-light rounded-full" />
+        </motion.div>
 
-        <div style={{ marginBottom: "2rem" }}>
-          <span style={{ display: "block", fontSize: "0.85rem", color: "#888", letterSpacing: "2px", marginBottom: "0.3rem" }}>ZODIAK</span>
-          <span style={{ fontSize: "1.3rem", color: "#ffb3c6", fontWeight: "bold" }}>♋ Cancer</span>
-        </div>
+        {/* Chapter 1 */}
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, margin: "-20%" }}
+          transition={{ duration: 0.8 }}
+          className="space-y-4"
+        >
+          <p className="text-lg md:text-xl text-text-primary leading-relaxed font-light">
+            Dulu, hiburan satu-satunya Lili hanyalah buku. Suatu hari, ia membaca cerita tentang{" "}
+            <span className="text-primary-pink font-medium italic">"Mr. Bebek Kwek Kwek"</span> yang cerewet.
+          </p>
+          <p className="text-lg md:text-xl text-text-primary leading-relaxed font-light">
+            Lili merasa tersindir, <span className="text-primary-pink font-medium">"wkwk... karena aku cerewet, kayak Mr Kwek Kwek,"</span> pikirnya.
+          </p>
+        </motion.div>
 
-        <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-          <span style={{ display: "block", fontSize: "0.85rem", color: "#ffb3c6", letterSpacing: "2px", marginBottom: "0.5rem" }}>OUR BEGINNING</span>
-          <span style={{ fontSize: "1.5rem", color: "white", fontWeight: "bold", letterSpacing: "1px" }}>🤍 08 / 04 / 2026</span>
-          
-          <div style={{ marginTop: "1rem", fontSize: "1rem", color: "#e0e0e0", fontFamily: "sans-serif", background: "rgba(0,0,0,0.3)", padding: "10px", borderRadius: "8px" }}>
-            <span style={{ fontSize: "0.8rem", color: "#888", display: "block", marginBottom: "5px" }}>WAKTU BERLALU</span>
-            {timeElapsed}
+        {/* Chapter 2 */}
+        <motion.div 
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, margin: "-20%" }}
+          transition={{ duration: 0.8 }}
+          className="space-y-4"
+        >
+          <p className="text-lg md:text-xl text-text-primary leading-relaxed font-light">
+            Saat harus membuat akun ML, Lili teringat dongeng lain tentang seekor angsa yang cantik, namun terlihat kotor karena debu.
+          </p>
+          <p className="text-lg md:text-xl text-text-primary leading-relaxed font-light">
+            <span className="text-primary-pink font-medium italic">"Itu bentuk insecurity aku dulu..."</span>
+          </p>
+          <p className="text-lg md:text-xl text-text-primary leading-relaxed font-light">
+            Dari situlah lahir username pertama: <span className="text-primary-pink font-medium">"angsaburukrupa"</span>.
+          </p>
+        </motion.div>
+
+        {/* Chapter 3 */}
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, margin: "-20%" }}
+          transition={{ duration: 0.8 }}
+          className="space-y-4"
+        >
+          <p className="text-lg md:text-xl text-text-primary leading-relaxed font-light">
+            Namun waktu berlalu. <span className="text-primary-pink font-medium">Insecurity itu perlahan sembuh</span>. Lili belajar untuk percaya diri dan bersyukur.
+          </p>
+          <p className="text-lg md:text-xl text-text-primary leading-relaxed font-light">
+            Angsa yang buruk rupa itu pun bertransformasi...
+          </p>
+          <h2 className="text-3xl md:text-4xl font-display text-primary-pink text-glow mt-4 mb-2">
+            ...menjadi seekor Angsa Putih.
+          </h2>
+          <p className="text-base md:text-lg text-text-secondary leading-relaxed font-light">
+            Kini ia dikenal sebagai <span className="text-white font-medium">angsaputiihh</span>.
+          </p>
+        </motion.div>
+
+        {/* Memory Box */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9, y: 20 }} 
+          whileInView={{ opacity: 1, scale: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } }} 
+          viewport={{ once: false }}
+          className="glass-effect-pink rounded-2xl p-8 md:p-10 border border-primary-pink/20 shadow-xl"
+        >
+          <div className="text-center space-y-6">
+            <h3 className="text-2xl md:text-3xl font-display text-white tracking-wide">
+              LILI & US
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="text-center">
+                <span className="block text-xs text-text-secondary uppercase tracking-wider mb-2">Hari Lahir</span>
+                <span className="text-lg md:text-xl text-primary-pink font-medium">🎂 21 Juni 2003</span>
+              </div>
+              <div className="text-center">
+                <span className="block text-xs text-text-secondary uppercase tracking-wider mb-2">Zodiak</span>
+                <span className="text-lg md:text-xl text-primary-pink font-medium">♋ Cancer</span>
+              </div>
+            </div>
+
+            <div className="border-t border-primary-pink/20 pt-6">
+              <span className="block text-sm text-primary-pink uppercase tracking-wider mb-3">Our Beginning</span>
+              <span className="text-2xl md:text-3xl text-white font-medium tracking-wide">🤍 08 / 04 / 2026</span>
+              
+              <div className="mt-4 p-4 bg-black/30 rounded-lg border border-primary-pink/20">
+                <span className="block text-xs text-text-secondary uppercase tracking-wider mb-2">Waktu Berlalu</span>
+                <span className="text-lg md:text-xl text-white font-medium">{timeElapsed}</span>
+              </div>
+            </div>
+
+            {/* Button */}
+            <div className="mt-6">
+              <Link 
+                href="/our-story" 
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-pink/20 border border-primary-pink/40 text-primary-pink font-medium rounded-full hover:bg-primary-pink hover:text-white transition-all duration-300 shadow-lg hover:shadow-primary-pink/30 transform hover:-translate-y-1"
+              >
+                <span>📖</span>
+                <span>Baca Kisah Awal Kita</span>
+              </Link>
+            </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* --- TOMBOL MENUJU HALAMAN CHAT HISTORY --- */}
-        <div style={{ marginTop: "3rem" }}>
-          <Link href="/our-story" style={{
-            display: "inline-block",
-            padding: "12px 24px",
-            background: "rgba(255, 179, 198, 0.1)",
-            border: "1px solid #ffb3c6",
-            color: "#ffb3c6",
-            textDecoration: "none",
-            borderRadius: "30px",
-            fontFamily: "sans-serif",
-            fontSize: "0.9rem",
-            letterSpacing: "1px",
-            transition: "all 0.3s ease"
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = "#ffb3c6";
-            e.currentTarget.style.color = "#000";
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = "rgba(255, 179, 198, 0.1)";
-            e.currentTarget.style.color = "#ffb3c6";
-          }}
-          >
-            📖 Baca Kisah Awal Kita
-          </Link>
-        </div>
-
-      </motion.div>
-      
-      <div style={{ height: "15vh" }}></div>
+        {/* Footer Note */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } }} 
+          viewport={{ once: false }}
+          className="text-center"
+        >
+          <p className="text-text-secondary text-sm font-light">
+            Setiap babak dalam kisah ini adalah bagian dari perjalanan yang indah...
+          </p>
+        </motion.div>
+      </div>
     </div>
   );
 }
